@@ -28,8 +28,8 @@
         public class Reverse
         {
             [Theory]
-            [InlineData(-232)]
-            [InlineData(132)]
+            [InlineData(1000000003)]
+            [InlineData(-1000000003)]
             public void WhenOutOfRange_ReturnsInvalid0(int integer)
             {
                 var reversed = ReverseInteger.Reverse(integer);
@@ -69,17 +69,14 @@
             }
 
             var reversedAsString = new string(numberAsString.Reverse().ToArray());
-            var reversedAsNumber = int.Parse(reversedAsString);
 
-            const int min = -231;
-            const int max = 230;
-            var isOutOfRange = (reversedAsNumber < min || reversedAsNumber > max);
-            if (isOutOfRange)
+            var canParse = int.TryParse(reversedAsString, out int reversedAsNumber);
+            if (!canParse)
             {
                 return Invalid;
             }
 
-            if(isNegative)
+            if (isNegative)
             {
                 reversedAsNumber = reversedAsNumber * -1;
             }
